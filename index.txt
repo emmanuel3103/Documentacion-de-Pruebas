@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Documentación de Pruebas — Sistema EDI-301</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0 1.5rem 3rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    header {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    h1, h2, h3, h4 {
+      color: #222;
+    }
+    nav {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    nav h2 {
+      margin-top: 0;
+    }
+    nav ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    nav li {
+      margin-bottom: 0.25rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0066cc;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    ul, ol {
+      margin-top: 0.3rem;
+      margin-bottom: 0.8rem;
+    }
+    code, pre {
+      background: #f4f4f4;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+    }
+    pre {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Documentación de Pruebas — Sistema EDI-301</h1>
+  <p>Equipo de desarrollo EDI-301 — Universidad Linda Vista</p>
+</header>
+
+<nav>
+  <h2>Índice</h2>
+  <ul>
+    <li><a href="#sec1">1. Introducción</a>
+      <ul>
+        <li><a href="#sec1-1">1.1 Propósito</a></li>
+        <li><a href="#sec1-2">1.2 Visión general del proyecto</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec2">2. Alcance</a>
+      <ul>
+        <li><a href="#sec2-1">2.1 En alcance</a></li>
+        <li><a href="#sec2-2">2.2 Fuera de alcance</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec3">3. Estrategia de pruebas</a>
+      <ul>
+        <li><a href="#sec3-1">3.1 Objetivos de prueba</a></li>
+        <li><a href="#sec3-2">3.2 Supuestos de prueba</a></li>
+        <li><a href="#sec3-3">3.3 Enfoque de datos</a></li>
+        <li><a href="#sec3-4">3.4 Niveles de prueba</a></li>
+        <li><a href="#sec3-5">3.5 Pruebas unitarias</a></li>
+        <li><a href="#sec3-6">3.6 Pruebas funcionales</a></li>
+        <li><a href="#sec3-7">3.7 Pruebas de aceptación de usuario (UAT)</a></li>
+        <li><a href="#sec3-8">3.8 Pruebas de regresión</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec4">4. Estrategia de ejecución</a>
+      <ul>
+        <li><a href="#sec4-1">4.1 Criterios de entrada</a></li>
+        <li><a href="#sec4-2">4.2 Criterios de salida</a></li>
+        <li><a href="#sec4-3">4.3 Validación y gestión de defectos</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec5">5. Requisitos de entorno</a>
+      <ul>
+        <li><a href="#sec5-1">5.1 Ambientes de prueba</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec6">6. División / área significativamente impactada</a></li>
+    <li><a href="#sec7">7. Dependencias</a></li>
+  </ul>
+</nav>
+
+<section id="sec1">
+  <h2>1. Introducción</h2>
+
+  <section id="sec1-1">
+    <h3>1.1 Propósito</h3>
+    <p>
+      El propósito de este documento es describir la estrategia de pruebas, los tipos de pruebas,
+      los criterios de entrada y salida, el plan de ejecución, los ambientes utilizados y los
+      mecanismos de gestión de defectos para garantizar que la aplicación móvil
+      <strong>EDI-301</strong> cumpla con los requisitos funcionales y no funcionales definidos.
+      Este documento sirve como referencia para desarrolladores, personal de QA y responsables
+      del aseguramiento de calidad.
+    </p>
+  </section>
+
+  <section id="sec1-2">
+    <h3>1.2 Visión general del proyecto</h3>
+    <p>
+      El sistema <strong>EDI-301</strong> es una aplicación móvil diseñada para gestionar el
+      programa de Equipos de Desarrollo Integral (EDI) de la Universidad Linda Vista. Las
+      funcionalidades principales incluyen:
+    </p>
+    <ul>
+      <li>Autenticación y manejo seguro de sesión.</li>
+      <li>Visualización de noticias y publicaciones.</li>
+      <li>Gestión y consulta de familias EDI.</li>
+      <li>Acceso a información de eventos y actividades.</li>
+      <li>Actualización de datos de perfil y carga de imágenes.</li>
+    </ul>
+    <p>
+      Las pruebas descritas en este documento se enfocan en verificar que estas funciones
+      operen correctamente en dispositivos móviles compatibles y que la aplicación se
+      integre adecuadamente con la API backend.
+    </p>
+  </section>
+</section>
+
+<section id="sec2">
+  <h2>2. Alcance</h2>
+
+  <section id="sec2-1">
+    <h3>2.1 En alcance</h3>
+    <p>Las pruebas abarcan los siguientes aspectos del sistema:</p>
+    <h4>Funcionalidades principales</h4>
+    <ul>
+      <li>Inicio de sesión y uso de tokens de autenticación.</li>
+      <li>Visualización de noticias y publicaciones.</li>
+      <li>Consulta y edición de la información de familia EDI.</li>
+      <li>Carga y visualización de imágenes de perfil y portada.</li>
+      <li>Gestión y consulta de eventos.</li>
+      <li>Navegación entre pantallas y mantenimiento de sesión.</li>
+      <li>Validaciones en formularios dentro de la app.</li>
+    </ul>
+    <h4>Pruebas de la API</h4>
+    <ul>
+      <li>Validación de respuestas y códigos de estado HTTP.</li>
+      <li>Verificación de seguridad y manejo de tokens.</li>
+      <li>Validación de datos de entrada y salida de la API.</li>
+    </ul>
+    <h4>Pruebas no funcionales</h4>
+    <ul>
+      <li>Tiempo de respuesta en pantallas clave.</li>
+      <li>Compatibilidad con versiones seleccionadas de Android y iOS.</li>
+      <li>Usabilidad básica (flujo intuitivo y mensajes claros).</li>
+    </ul>
+  </section>
+
+  <section id="sec2-2">
+    <h3>2.2 Fuera de alcance</h3>
+    <p>Quedan fuera del alcance de este plan de pruebas:</p>
+    <ul>
+      <li>Pruebas en entornos de escritorio o navegadores web.</li>
+      <li>Pruebas de infraestructura avanzada externa al proyecto (balanceadores, CDN, etc.).</li>
+      <li>Pruebas de carga extrema por encima de 5,000 usuarios concurrentes.</li>
+      <li>Pruebas sobre funcionalidades no implementadas o solo prototipadas.</li>
+    </ul>
+  </section>
+</section>
+
+<section id="sec3">
+  <h2>3. Estrategia de pruebas</h2>
+  <p>
+    La estrategia de pruebas combina pruebas manuales y automatizadas, con foco en la calidad
+    funcional, estabilidad, seguridad y experiencia de uso en dispositivos móviles.
+  </p>
+
+  <section id="sec3-1">
+    <h3>3.1 Objetivos de prueba</h3>
+    <ul>
+      <li>Verificar que las funcionalidades cumplan los requisitos establecidos.</li>
+      <li>Detectar y corregir defectos antes del despliegue a producción.</li>
+      <li>Asegurar estabilidad, seguridad y usabilidad en dispositivos móviles.</li>
+      <li>Confirmar la correcta integración con la API backend.</li>
+      <li>Garantizar que las actualizaciones no introduzcan errores regresivos.</li>
+    </ul>
+  </section>
+
+  <section id="sec3-2">
+    <h3>3.2 Supuestos de prueba</h3>
+    <ul>
+      <li>Los usuarios contarán con conexión estable a Internet.</li>
+      <li>El servidor backend estará disponible durante las sesiones de prueba.</li>
+      <li>Las credenciales de prueba entregadas serán válidas y operativas.</li>
+      <li>Los dispositivos móviles utilizados cumplen los requisitos mínimos del proyecto.</li>
+    </ul>
+  </section>
+
+  <section id="sec3-3">
+    <h3>3.3 Enfoque de datos</h3>
+    <p>Se emplearán los siguientes tipos de datos de prueba:</p>
+    <ul>
+      <li><strong>Datos reales controlados:</strong> usuarios, familias y eventos creados por QA.</li>
+      <li><strong>Datos simulados:</strong> casos límite para validar formatos y reglas.</li>
+      <li><strong>Datos anómalos:</strong> entradas incorrectas para comprobar manejo de errores.</li>
+    </ul>
+  </section>
+
+  <section id="sec3-4">
+    <h3>3.4 Niveles de prueba</h3>
+    <ol>
+      <li><strong>Pruebas unitarias:</strong> validan funciones individuales.</li>
+      <li><strong>Pruebas funcionales:</strong> verifican flujos completos en la app.</li>
+      <li><strong>Pruebas de aceptación de usuario (UAT):</strong> validación por el administrador EDI.</li>
+      <li><strong>Pruebas de regresión:</strong> aseguran estabilidad tras cambios.</li>
+    </ol>
+  </section>
+
+  <section id="sec3-5">
+    <h3>3.5 Pruebas unitarias</h3>
+    <p>
+      Se aplican sobre funciones aisladas del backend (controladores, servicios, validadores) y sobre
+      lógica interna en la app (providers, services, DTOs).
+    </p>
+    <p><strong>Herramientas sugeridas:</strong> Jest para backend y <code>flutter test</code> para la app.</p>
+  </section>
+
+  <section id="sec3-6">
+    <h3>3.6 Pruebas funcionales</h3>
+    <p>
+      Se realizan de forma manual sobre la aplicación móvil, cubriendo principalmente:
+    </p>
+    <ul>
+      <li>Inicio de sesión y cierre de sesión.</li>
+      <li>Navegación entre pantallas principales.</li>
+      <li>Consulta y edición de familia EDI.</li>
+      <li>Carga y visualización de imágenes.</li>
+      <li>Creación y consulta de eventos.</li>
+      <li>Publicaciones y visualización de noticias.</li>
+    </ul>
+  </section>
+
+  <section id="sec3-7">
+    <h3>3.7 Pruebas de aceptación de usuario (UAT)</h3>
+    <p>
+      El administrador del programa EDI y otros usuarios clave evaluarán que:
+    </p>
+    <ul>
+      <li>Las funciones satisfacen las necesidades del programa.</li>
+      <li>La navegación sea clara y comprensible.</li>
+      <li>La información mostrada sea consistente y confiable.</li>
+      <li>Las operaciones críticas (eventos, publicaciones) funcionen correctamente.</li>
+    </ul>
+  </section>
+
+  <section id="sec3-8">
+    <h3>3.8 Pruebas de regresión</h3>
+    <p>
+      Se ejecutarán después de cada actualización importante o corrección crítica, cubriendo
+      funcionalidades como:
+    </p>
+    <ul>
+      <li>Autenticación y manejo de sesión.</li>
+      <li>Publicaciones y noticias.</li>
+      <li>Carga y visualización de imágenes.</li>
+      <li>Gestión de eventos.</li>
+      <li>Perfil y datos del usuario.</li>
+    </ul>
+  </section>
+</section>
+
+<section id="sec4">
+  <h2>4. Estrategia de ejecución</h2>
+
+  <section id="sec4-1">
+    <h3>4.1 Criterios de entrada</h3>
+    <ul>
+      <li>Backend desplegado en ambiente de pruebas.</li>
+      <li>Aplicación EDI-301 instalada en los dispositivos de prueba.</li>
+      <li>Datos de prueba configurados en la base de datos.</li>
+      <li>Acceso a herramientas de monitoreo y registro (logs, Postman, etc.).</li>
+    </ul>
+  </section>
+
+  <section id="sec4-2">
+    <h3>4.2 Criterios de salida</h3>
+    <ul>
+      <li>Todos los casos de prueba críticos ejecutados.</li>
+      <li>Defectos de severidad alta corregidos o mitigados.</li>
+      <li>Informe de resultados de pruebas elaborado y revisado.</li>
+      <li>Validación final por parte del administrador del programa EDI.</li>
+    </ul>
+  </section>
+
+  <section id="sec4-3">
+    <h3>4.3 Validación y gestión de defectos</h3>
+    <p>
+      Los defectos se registrarán en un sistema de seguimiento (por ejemplo, GitHub Issues) y se
+      clasificarán según su severidad:
+    </p>
+    <ul>
+      <li><strong>Crítico:</strong> impide el uso de una funcionalidad esencial.</li>
+      <li><strong>Alto:</strong> afecta funciones importantes pero con alternativas.</li>
+      <li><strong>Medio:</strong> errores que no detienen el flujo pero afectan la experiencia.</li>
+      <li><strong>Bajo:</strong> detalles menores o cosméticos.</li>
+    </ul>
+    <p>Flujo básico:</p>
+    <ol>
+      <li>Registro del defecto por QA o usuario clave.</li>
+      <li>Asignación a desarrollador responsable.</li>
+      <li>Corrección y despliegue en ambiente de pruebas.</li>
+      <li>Re-ejecución de la prueba afectada.</li>
+      <li>Cierre o reapertura del defecto según resultados.</li>
+    </ol>
+  </section>
+</section>
+
+<section id="sec5">
+  <h2>5. Requisitos de entorno</h2>
+
+  <section id="sec5-1">
+    <h3>5.1 Ambientes de prueba</h3>
+    <h4>Ambiente de QA</h4>
+    <ul>
+      <li>Dispositivos Android (ej. 8, 10, 12).</li>
+      <li>Dispositivos iOS (ej. 13, 14, 16).</li>
+      <li>API en entorno de pruebas (por ejemplo: <code>https://qa.edi.ulv/api</code>).</li>
+      <li>Node.js versión 18 o superior.</li>
+      <li>SQL Server para la base de datos del sistema.</li>
+      <li>Flutter 3.x para compilación de la app.</li>
+    </ul>
+    <h4>Ambiente de producción</h4>
+    <ul>
+      <li>Dispositivos reales utilizados por alumnos y colaboradores.</li>
+      <li>API oficial de producción del sistema EDI-301.</li>
+    </ul>
+  </section>
+</section>
+
+<section id="sec6">
+  <h2>6. División / área significativamente impactada</h2>
+  <p>Las áreas más impactadas por el proceso de pruebas y la operación del sistema EDI-301 son:</p>
+  <ul>
+    <li>Capellanía Universitaria (administración del programa EDI).</li>
+    <li>Departamento de Tecnologías de Información.</li>
+    <li>Estudiantes y empleados que participan en las familias EDI.</li>
+  </ul>
+</section>
+
+<section id="sec7">
+  <h2>7. Dependencias</h2>
+  <p>La correcta ejecución de las pruebas depende de:</p>
+  <ul>
+    <li>Disponibilidad de la API y la base de datos del sistema.</li>
+    <li>Acceso a datos de prueba suficientes y representativos.</li>
+    <li>Colaboración del equipo de desarrollo para la corrección de defectos.</li>
+    <li>Documentación técnica actualizada del sistema.</li>
+    <li>Disponibilidad de dispositivos móviles compatibles para pruebas.</li>
+  </ul>
+</section>
+
+</body>
+</html>
